@@ -71,7 +71,7 @@
     <Compile Include="IAQIResult.cs" />
     <Compile Include="MissingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\NationalAQIPublishDataService\Reference.cs">
+    <Compile Include="Service References\SyncNationalAQIPublishDataService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -82,34 +82,43 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="log4net.config" />
-    <None Include="Service References\NationalAQIPublishDataService\SyncService.wsdl" />
-    <None Include="Service References\NationalAQIPublishDataService\SyncService.xsd">
+    <None Include="Service References\SyncNationalAQIPublishDataService\SyncNationalAQIPublishDataService.wsdl" />
+    <None Include="Service References\SyncNationalAQIPublishDataService\SyncNationalAQIPublishDataService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\NationalAQIPublishDataService\SyncService1.xsd">
+    <None Include="Service References\SyncNationalAQIPublishDataService\SyncNationalAQIPublishDataService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\NationalAQIPublishDataService\SyncService2.xsd">
+    <None Include="Service References\SyncNationalAQIPublishDataService\SyncNationalAQIPublishDataService2.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SyncNationalAQIPublishDataService\Xin.AQS.SyncNationalAQIPublishDataService.AQIDataPublishLive.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SyncNationalAQIPublishDataService\Xin.AQS.SyncNationalAQIPublishDataService.CityAQIPublishLive.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SyncNationalAQIPublishDataService\Xin.AQS.SyncNationalAQIPublishDataService.CityDayAQIPublishLive.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\NationalAQIPublishDataService\" />
+    <WCFMetadataStorage Include="Service References\SyncNationalAQIPublishDataService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\NationalAQIPublishDataService\SyncService.disco" />
+    <None Include="Service References\SyncNationalAQIPublishDataService\SyncNationalAQIPublishDataService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\NationalAQIPublishDataService\configuration91.svcinfo" />
+    <None Include="Service References\SyncNationalAQIPublishDataService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\NationalAQIPublishDataService\configuration.svcinfo" />
+    <None Include="Service References\SyncNationalAQIPublishDataService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\NationalAQIPublishDataService\Reference.svcmap">
+    <None Include="Service References\SyncNationalAQIPublishDataService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

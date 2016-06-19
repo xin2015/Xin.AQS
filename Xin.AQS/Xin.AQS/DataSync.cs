@@ -1,10 +1,10 @@
-﻿using ConsoleApplication.SyncAirMonitorPublishDataService;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Xin.AQS.SyncNationalAQIPublishDataService;
 using Xin.Basic;
 
 namespace Xin.AQS
@@ -30,16 +30,16 @@ namespace Xin.AQS
             string tableName = "NationalCityAQIPublishLive";
             if (!HasData(tableName, time))
             {
-                using (SyncServiceClient client = new SyncServiceClient())
+                using (SyncNationalAQIPublishDataServiceClient client = new SyncNationalAQIPublishDataServiceClient())
                 {
                     List<CityAQIPublishLive> list;
                     if (live)
                     {
-                        list = client.SyncCityAQIPublishLive().Where(o => o.TimePoint == time).ToList();
+                        list = client.GetCityAQIPublishLive().Where(o => o.TimePoint == time).ToList();
                     }
                     else
                     {
-                        list = client.SyncCityAQIPublishHistory(time, time).ToList();
+                        list = client.GetCityAQIPublishHistory(time, time).ToList();
                     }
                     if (list.Any())
                     {

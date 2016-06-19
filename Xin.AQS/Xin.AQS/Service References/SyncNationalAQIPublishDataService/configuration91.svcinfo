@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="nWuOoMbC6eG5P/sU4tJXg1pZsas=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="sf/JXTOnr66gYAvN8dqfa0r2S0Q=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_ISyncService">
+    <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_ISyncNationalAQIPublishDataService">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_ISyncService</serializedValue>
+          <serializedValue>BasicHttpBinding_ISyncNationalAQIPublishDataService</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_ISyncService" contract="NationalAQIPublishDataService.ISyncService" bindingType="basicHttpBinding" address="http://219.131.199.90:8340/SyncAirMonitorPublishData/SyncService.svc" bindingConfiguration="BasicHttpBinding_ISyncService">
+    <endpoint name="BasicHttpBinding_ISyncNationalAQIPublishDataService" contract="SyncNationalAQIPublishDataService.ISyncNationalAQIPublishDataService" bindingType="basicHttpBinding" address="http://219.131.199.90:8340/SyncNationalAQIPublishDataService/SyncNationalAQIPublishDataService.svc" bindingConfiguration="BasicHttpBinding_ISyncNationalAQIPublishDataService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://219.131.199.90:8340/SyncAirMonitorPublishData/SyncService.svc</serializedValue>
+          <serializedValue>http://219.131.199.90:8340/SyncNationalAQIPublishDataService/SyncNationalAQIPublishDataService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -124,10 +124,10 @@
           <serializedValue>basicHttpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_ISyncService</serializedValue>
+          <serializedValue>BasicHttpBinding_ISyncNationalAQIPublishDataService</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>NationalAQIPublishDataService.ISyncService</serializedValue>
+          <serializedValue>SyncNationalAQIPublishDataService.ISyncNationalAQIPublishDataService</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -187,7 +187,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_ISyncService</serializedValue>
+          <serializedValue>BasicHttpBinding_ISyncNationalAQIPublishDataService</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
