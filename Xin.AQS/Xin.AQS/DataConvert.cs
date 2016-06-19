@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xin.AQS.SyncNationalAQIPublishDataService;
+using Xin.Basic;
 
 namespace Xin.AQS
 {
@@ -44,6 +46,52 @@ namespace Xin.AQS
             aqci.O38H = src.O38H;
             aqci.PM25 = src.PM25;
             return aqci;
+        }
+
+        public static AirDayAQIRankData ToAirDayAQIRankData(CityDayAQIPublishLive src)
+        {
+            AirDayAQIRankData data = new AirDayAQIRankData();
+            data.Code = src.CityCode;
+            data.Name = src.Area;
+            data.Time = src.TimePoint;
+            try
+            {
+                if (src.SO2_24h != ConfigHelper.EmptyValueString)
+                {
+                    data.SO2 = decimal.Parse(src.SO2_24h);
+                }
+                if (src.NO2_24h != ConfigHelper.EmptyValueString)
+                {
+                    data.NO2 = decimal.Parse(src.NO2_24h);
+                }
+                if (src.PM10_24h != ConfigHelper.EmptyValueString)
+                {
+                    data.PM10 = decimal.Parse(src.PM10_24h);
+                }
+                if (src.CO_24h != ConfigHelper.EmptyValueString)
+                {
+                    data.CO = decimal.Parse(src.CO_24h);
+                }
+                if (src.O3_8h_24h != ConfigHelper.EmptyValueString)
+                {
+                    data.O38H = decimal.Parse(src.O3_8h_24h);
+                }
+                if (src.PM2_5_24h != ConfigHelper.EmptyValueString)
+                {
+                    data.PM25 = decimal.Parse(src.PM2_5_24h);
+                }
+                if (src.AQI != ConfigHelper.EmptyValueString)
+                {
+                    data.AQI = int.Parse(src.AQI);
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Logger.Error("", e);
+            }
+            data.PrimaryPollutant = src.PrimaryPollutant;
+            data.Type = src.Quality;
+            return data;
         }
     }
 }

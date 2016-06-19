@@ -28,36 +28,115 @@ namespace Xin.AQS
         public static void SyncNationalCityAQIPublishData(DateTime time, bool live = true)
         {
             string tableName = "NationalCityAQIPublishLive";
-            if (!HasData(tableName, time))
+            try
             {
-                using (SyncNationalAQIPublishDataServiceClient client = new SyncNationalAQIPublishDataServiceClient())
+                if (!HasData(tableName, time))
                 {
                     List<CityAQIPublishLive> list;
-                    if (live)
+                    try
                     {
-                        list = client.GetCityAQIPublishLive().Where(o => o.TimePoint == time).ToList();
-                    }
-                    else
-                    {
-                        list = client.GetCityAQIPublishHistory(time, time).ToList();
-                    }
-                    if (list.Any())
-                    {
-                        DataTable dt = list.GetDataTable<CityAQIPublishLive>(tableName);
-                        try
+                        using (SyncNationalAQIPublishDataServiceClient client = new SyncNationalAQIPublishDataServiceClient())
                         {
-                            SqlHelper.Insert(dt);
-                            dt.TableName = tableName.Replace("Live", "History");
-                            SqlHelper.Insert(dt);
-                            MissingData.DeleteMissingData(tableName, tableName, time);
+                            if (live)
+                            {
+                                list = client.GetCityAQIPublishLive().Where(o => o.TimePoint == time).ToList();
+                            }
+                            else
+                            {
+                                list = client.GetCityAQIPublishHistory(time, time).ToList();
+                            }
                         }
-                        catch (Exception e)
+                        if (list.Any())
                         {
-                            LogHelper.Logger.Error("SyncNationalCityAQIPublishData", e);
-                            MissingData.InsertOrUpateMissingData(tableName,tableName,time,e.Message);
+                            DataTable dt = list.GetDataTable<CityAQIPublishLive>(tableName);
+                            try
+                            {
+                                SqlHelper.Insert(dt);
+                                dt.TableName = tableName.Replace("Live", "History");
+                                SqlHelper.Insert(dt);
+                                MissingData.DeleteMissingData(tableName, tableName, time);
+                            }
+                            catch (Exception e)
+                            {
+                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", tableName), e);
+                                MissingData.InsertOrUpateMissingData(tableName, tableName, time, e.Message);
+                            }
                         }
+                        else
+                        {
+                            MissingData.InsertOrUpateMissingData(tableName, tableName, time);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogHelper.Logger.Error(string.Format("Get {0} failed.", tableName), e);
+                        MissingData.InsertOrUpateMissingData(tableName, tableName, time, e.Message);
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Logger.Error("SyncNationalCityAQIPublishData failed.", e);
+            }
+        }
+
+        public static void SyncNationalCityDayAQIPublishData(DateTime time, bool live = true)
+        {
+            string tableName = "NationalCityDayAQIPublishLive";
+            try
+            {
+                if (!HasData(tableName, time))
+                {
+                    List<CityDayAQIPublishLive> list;
+                    try
+                    {
+                        using (SyncNationalAQIPublishDataServiceClient client = new SyncNationalAQIPublishDataServiceClient())
+                        {
+                            if (live)
+                            {
+                                list = client.GetCityDayAQIPublishLive().Where(o => o.TimePoint == time).ToList();
+                            }
+                            else
+                            {
+                                list = client.GetCityDayAQIPublishHistory(time, time).ToList();
+                            }
+                        }
+                        if (list.Any())
+                        {
+                            DataTable dt = list.GetDataTable<CityDayAQIPublishLive>(tableName);
+                            try
+                            {
+                                SqlHelper.Insert(dt);
+                                dt.TableName = tableName.Replace("Live", "History");
+                                SqlHelper.Insert(dt);
+                                MissingData.DeleteMissingData(tableName, tableName, time);
+                            }
+                            catch (Exception e)
+                            {
+                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", tableName), e);
+                                MissingData.InsertOrUpateMissingData(tableName, tableName, time, e.Message);
+                            }
+                            tableName = "NationalCityDayAQIPublishRankData";
+                            List<AirDayAQIRankData> rankDataList=new List<AirDayAQIRankData>();
+                            list.ForEach(o=>{
+                                
+                            })
+                        }
+                        else
+                        {
+                            MissingData.InsertOrUpateMissingData(tableName, tableName, time);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogHelper.Logger.Error(string.Format("Get {0} failed.", tableName), e);
+                        MissingData.InsertOrUpateMissingData(tableName, tableName, time, e.Message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Logger.Error("SyncNationalCityDayAQIPublishData failed.", e);
             }
         }
     }

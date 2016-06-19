@@ -52,7 +52,9 @@
   <ItemGroup>
     <Compile Include="AirDataBase.cs" />
     <Compile Include="AirDayAQCIData.cs" />
+    <Compile Include="AirDayAQCIRankData.cs" />
     <Compile Include="AirDayAQIData.cs" />
+    <Compile Include="AirDayAQIRankData.cs" />
     <Compile Include="AirDayData.cs" />
     <Compile Include="AirHourAQIData.cs" />
     <Compile Include="AirHourData.cs" />

@@ -7,6 +7,9 @@ namespace Xin.AQS
 {
     public interface IAQIResult
     {
+        /// <summary>
+        /// 空气质量指数
+        /// </summary>
         int? AQI { get; set; }
         string PrimaryPollutant { get; set; }
         string Type { get; set; }
