@@ -63,6 +63,8 @@
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="DataConvert.cs" />
     <Compile Include="AirData.cs" />
+    <Compile Include="DataHandle.cs" />
+    <Compile Include="DataSync.cs" />
     <Compile Include="DayAQIResult.cs" />
     <Compile Include="HourAQIResult.cs" />
     <Compile Include="IAQCIResult.cs" />
