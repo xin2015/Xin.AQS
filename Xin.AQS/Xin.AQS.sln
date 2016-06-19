@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xin.AQS", "Xin.AQS\Xin.AQS.csproj", "{A9E75F4D-8924-4724-BB43-B8693C5F13F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{E81F1689-6E91-49D4-BD47-CE5C8BF0477C}"
+	ProjectSection(SolutionItems) = preProject
+		lib\log4net.dll = lib\log4net.dll
+		lib\log4net.pdb = lib\log4net.pdb
+		lib\log4net.xml = lib\log4net.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9E75F4D-8924-4724-BB43-B8693C5F13F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E75F4D-8924-4724-BB43-B8693C5F13F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E75F4D-8924-4724-BB43-B8693C5F13F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E75F4D-8924-4724-BB43-B8693C5F13F2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
