@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\lib\log4net.dll</HintPath>
+      <HintPath>..\..\..\..\组件\Xin.Basic\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -45,6 +45,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Xin.Basic">
+      <HintPath>..\..\..\..\组件\Xin.Basic\Xin.Basic.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirDataBase.cs" />
@@ -59,63 +62,17 @@
     <Compile Include="AQIResult.cs" />
     <Compile Include="ConfigHelper.cs" />
     <Compile Include="DataConvert.cs" />
-    <Compile Include="DataTableHelper.cs" />
     <Compile Include="AirData.cs" />
     <Compile Include="DayAQIResult.cs" />
     <Compile Include="HourAQIResult.cs" />
     <Compile Include="IAQCIResult.cs" />
     <Compile Include="IAQIResult.cs" />
-    <Compile Include="LogHelper.cs" />
-    <Compile Include="MemoryCacheHelper.cs" />
     <Compile Include="MissingData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\SyncNationalAQIPublishDataService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="SqlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="log4net.config" />
-    <None Include="Service References\SyncNationalAQIPublishDataService\SyncService.wsdl" />
-    <None Include="Service References\SyncNationalAQIPublishDataService\SyncService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SyncNationalAQIPublishDataService\SyncService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SyncNationalAQIPublishDataService\SyncService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SyncNationalAQIPublishDataService\Xin.AQS.SyncNationalAQIPublishDataService.CityAQIPublishLive.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\SyncNationalAQIPublishDataService\Xin.AQS.SyncNationalAQIPublishDataService.CityDayAQIPublishLive.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\SyncNationalAQIPublishDataService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SyncNationalAQIPublishDataService\SyncService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SyncNationalAQIPublishDataService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SyncNationalAQIPublishDataService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SyncNationalAQIPublishDataService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
