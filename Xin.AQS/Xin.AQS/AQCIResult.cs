@@ -8,7 +8,7 @@ namespace Xin.AQS
     /// <summary>
     /// 空气质量综合指数计算结果
     /// </summary>
-    public class AQCIResult
+    public class AQCIResult: IAQCIResult
     {
         /// <summary>
         /// 二氧化硫（SO2）24小时平均浓度（μg/m³）

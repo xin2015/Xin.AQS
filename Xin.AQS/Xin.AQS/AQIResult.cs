@@ -8,7 +8,7 @@ namespace Xin.AQS
     /// <summary>
     /// AQI计算结果
     /// </summary>
-    public abstract class AQIResult
+    public abstract class AQIResult: IAQIResult
     {
         /// <summary>
         /// 空气质量指数

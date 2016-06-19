@@ -7,16 +7,34 @@ using System.Text;
 
 namespace Xin.AQS
 {
+    /// <summary>
+    /// 缺失数据记录
+    /// </summary>
     public class MissingData
     {
         private static string selectText = "select * from MissingData where TableName=@TableName and Code=@Code and Time=@Time";
         private static string deleteText = "delete MissingData where TableName=@TableName and Code=@Code and Time=@Time";
         private static string queryText = "select * from MissingData where TableName=@TableName and MissTimes < 100";
 
+        /// <summary>
+        /// 表名
+        /// </summary>
         public string TableName { get; set; }
+        /// <summary>
+        /// 编码
+        /// </summary>
         public string Code { get; set; }
+        /// <summary>
+        /// 时间
+        /// </summary>
         public DateTime Time { get; set; }
+        /// <summary>
+        /// 缺失次数
+        /// </summary>
         public int MissTimes { get; set; }
+        /// <summary>
+        /// 详情
+        /// </summary>
         public string Exception { get; set; }
 
         public MissingData() { }

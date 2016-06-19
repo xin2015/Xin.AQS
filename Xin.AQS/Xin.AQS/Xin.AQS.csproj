@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -44,15 +47,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirDataBase.cs" />
+    <Compile Include="AirDayAQCIData.cs" />
+    <Compile Include="AirDayAQIData.cs" />
+    <Compile Include="AirDayData.cs" />
+    <Compile Include="AirHourAQIData.cs" />
+    <Compile Include="AirHourData.cs" />
     <Compile Include="AQCICalculate.cs" />
     <Compile Include="AQCIResult.cs" />
     <Compile Include="AQICalculate.cs" />
     <Compile Include="AQIResult.cs" />
     <Compile Include="ConfigHelper.cs" />
+    <Compile Include="DataConvert.cs" />
     <Compile Include="DataTableHelper.cs" />
     <Compile Include="AirData.cs" />
     <Compile Include="DayAQIResult.cs" />
     <Compile Include="HourAQIResult.cs" />
+    <Compile Include="IAQCIResult.cs" />
+    <Compile Include="IAQIResult.cs" />
     <Compile Include="LogHelper.cs" />
     <Compile Include="MemoryCacheHelper.cs" />
     <Compile Include="MissingData.cs" />

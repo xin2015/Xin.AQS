@@ -178,7 +178,7 @@ namespace Xin.AQS
         /// <param name="concentrationLimits">浓度值限值</param>
         /// <param name="value">浓度值</param>
         /// <returns></returns>
-        static int? CalculateIAQI(int[] concentrationLimits, decimal value)
+        private static int? CalculateIAQI(int[] concentrationLimits, decimal value)
         {
             int? result = null;
             if (value >= 0 && value <= concentrationLimits.Last())
@@ -191,6 +191,46 @@ namespace Xin.AQS
                         break;
                     }
                 }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 计算污染物监测项的实时IAQI
+        /// </summary>
+        /// <param name="pollutant">监测项名称，参照HourAQIResult</param>
+        /// <param name="value">浓度值</param>
+        /// <returns></returns>
+        public static int? CalculateHourIAQI(string pollutant, decimal? value)
+        {
+            int? result;
+            if (value.HasValue)
+            {
+                result = CalculateIAQI(hourPollutantLimitsDic[pollutant], value.Value);
+            }
+            else
+            {
+                result = null;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 计算污染物监测项的日均IAQI
+        /// </summary>
+        /// <param name="pollutant">监测项名称，参照DayAQIResult</param>
+        /// <param name="value">浓度值</param>
+        /// <returns></returns>
+        public static int? CalculateDayIAQI(string pollutant, decimal? value)
+        {
+            int? result;
+            if (value.HasValue)
+            {
+                result = CalculateIAQI(dayPollutantLimitsDic[pollutant], value.Value);
+            }
+            else
+            {
+                result = null;
             }
             return result;
         }
