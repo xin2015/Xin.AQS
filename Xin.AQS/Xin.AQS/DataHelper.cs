@@ -7,6 +7,42 @@ namespace Xin.AQS
 {
     public class DataHelper
     {
+        public static void UpdateRank(List<AirDayAQIRankData> list)
+        {
+            int currentRank = 1, currentNewRank = 1, order = 1;
+            list.ForEach(o =>
+            {
+                if (o.Rank > currentRank)
+                {
+                    currentRank = o.Rank;
+                    o.Rank = currentNewRank = order;
+                }
+                else
+                {
+                    o.Rank = currentNewRank;
+                }
+                order++;
+            });
+        }
+
+        public static void UpdateRank(List<AirDayAQCIRankData> list)
+        {
+            int currentRank = 1, currentNewRank = 1, order = 1;
+            list.ForEach(o =>
+            {
+                if (o.Rank > currentRank)
+                {
+                    currentRank = o.Rank;
+                    o.Rank = currentNewRank = order;
+                }
+                else
+                {
+                    o.Rank = currentNewRank;
+                }
+                order++;
+            });
+        }
+
         public static void UpdateRankByAQI(List<AirDayAQIRankData> list)
         {
             int currentAQI = 0, currentRank = 1, order = 1;
