@@ -407,5 +407,73 @@ namespace Xin.AQS
                 LogHelper.Logger.Error("SyncNationalCityDayAQIPublishRankData failed.", e);
             }
         }
+
+        public static void SyncDistrictDayAQIPublishRankData(DateTime time)
+        {
+            string tableName = ConfigHelper.DistrictDayAQIPublishRankData;
+            try
+            {
+                if (!HasData(tableName, time, "Time"))
+                {
+                    try
+                    {
+                        DateTime timePoint=time.AddDays(1);
+                        List<AQIDataPublishLive> stationDataList = DataQuery.GetHistory<AQIDataPublishLive>(ConfigHelper.AQIDataPublishHistory, timePoint, timePoint);
+                        if (stationDataList.Any())
+                        {
+                            try
+                            {
+                                List<AirDayData> stationDayDataList=DataConvert.ToAirDayData(stationDataList);
+                                List<District> districtList = District.GetList();
+                                List<Station> stationList = Station.GetList();
+                                List<AirDayAQIRankData> list = new List<AirDayAQIRankData>();
+                                districtList.ForEach(o =>
+                                {
+                                    string[] stationCodes = stationList.Where(p => p.DistrictCode == o.Code).Select(p => p.Code).ToArray();
+                                    IEnumerable<AirDayData> tempList = stationDayDataList.Where(p => stationCodes.Contains(p.Code));
+                                    if (tempList.Any())
+                                    {
+                                        AirDayAQIRankData data = new AirDayAQIRankData();
+                                        data.Code = o.Code;
+                                        data.Name = o.Name;
+                                        data.Time = time;
+                                        data.SO2 = DataHandle.Round(tempList.Average(p => p.SO2));
+                                        data.NO2 = DataHandle.Round(tempList.Average(p => p.NO2));
+                                        data.PM10 = DataHandle.Round(tempList.Average(p => p.PM10));
+                                        data.CO = DataHandle.Round(tempList.Average(p => p.CO), 3);
+                                        data.O38H = DataHandle.Round(tempList.Average(p => p.O38H));
+                                        data.PM25 = DataHandle.Round(tempList.Average(p => p.PM25));
+                                        data.GetAQI();
+                                        list.Add(data);
+                                    }
+                                });
+                                DataHelper.UpdateRankByAQI(list);
+                                DataTable dt = list.GetDataTable<AirDayAQIRankData>(tableName, "Effect", "Measure");
+                                SqlHelper.Insert(dt);
+                                MissingData.DeleteMissingData(tableName, tableName, time);
+                            }
+                            catch (Exception e)
+                            {
+                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", tableName), e);
+                                MissingData.InsertOrUpateMissingData(tableName, tableName, time, e.Message);
+                            }
+                        }
+                        else
+                        {
+                            MissingData.InsertOrUpateMissingData(tableName, tableName, time);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogHelper.Logger.Error(string.Format("Get {0} failed.", tableName), e);
+                        MissingData.InsertOrUpateMissingData(tableName, tableName, time, e.Message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Logger.Error("SyncNationalCityDayAQIPublishRankData failed.", e);
+            }
+        }
     }
 }

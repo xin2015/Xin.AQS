@@ -21,6 +21,10 @@ namespace Xin.AQS
         public static string NationalCityDayAQIPublishHistory { get; private set; }
         public static string NationalCityDayAQIPublishRankData { get; private set; }
         public static string NationalCityDayAQCIPublishRankData { get; private set; }
+        public static string AQIDataPublishLive { get; private set; }
+        public static string AQIDataPublishHistory { get; private set; }
+        public static string DistrictDayAQIPublishRankData { get; set; }
+        public static string DistrictDayAQCIPublishRankData { get; set; }
 
         static ConfigHelper()
         {
@@ -31,6 +35,10 @@ namespace Xin.AQS
             NationalCityDayAQIPublishHistory = "NationalCityDayAQIPublishHistory";
             NationalCityDayAQIPublishRankData = "NationalCityDayAQIPublishRankData";
             NationalCityDayAQCIPublishRankData = "NationalCityDayAQCIPublishRankData";
+            AQIDataPublishLive = "AQIDataPublishLive";
+            AQIDataPublishHistory = "AQIDataPublishLive";
+            DistrictDayAQIPublishRankData = "DistrictDayAQIPublishRankData";
+            DistrictDayAQCIPublishRankData = "DistrictDayAQCIPublishRankData";
         }
     }
 }

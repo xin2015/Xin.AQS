@@ -86,6 +86,44 @@ namespace Xin.AQS
             }
         }
 
+        public static void ToAirDayData(AQIDataPublishLive source, AirDayData target)
+        {
+            target.Code = source.StationCode;
+            target.Name = source.PositionName;
+            target.Time = source.TimePoint;
+            try
+            {
+                if (source.SO2_24h != ConfigHelper.EmptyValueString)
+                {
+                    target.SO2 = decimal.Parse(source.SO2_24h);
+                }
+                if (source.NO2_24h != ConfigHelper.EmptyValueString)
+                {
+                    target.NO2 = decimal.Parse(source.NO2_24h);
+                }
+                if (source.PM10_24h != ConfigHelper.EmptyValueString)
+                {
+                    target.PM10 = decimal.Parse(source.PM10_24h);
+                }
+                if (source.CO_24h != ConfigHelper.EmptyValueString)
+                {
+                    target.CO = decimal.Parse(source.CO_24h);
+                }
+                if (source.O3_8h != ConfigHelper.EmptyValueString)
+                {
+                    target.O38H = decimal.Parse(source.O3_8h);
+                }
+                if (source.PM2_5_24h != ConfigHelper.EmptyValueString)
+                {
+                    target.PM25 = decimal.Parse(source.PM2_5_24h);
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Logger.Error("AQIDataPublishLive To AirDayData", e);
+            }
+        }
+
         public static AirDayData ToAirDayData(CityDayAQIPublishLive src)
         {
             AirDayData data = new AirDayData();
@@ -93,7 +131,21 @@ namespace Xin.AQS
             return data;
         }
 
+        public static AirDayData ToAirDayData(AQIDataPublishLive src)
+        {
+            AirDayData data = new AirDayData();
+            ToAirDayData(src, data);
+            return data;
+        }
+
         public static List<AirDayData> ToAirDayData(List<CityDayAQIPublishLive> src)
+        {
+            List<AirDayData> list = new List<AirDayData>();
+            src.ForEach(o => list.Add(ToAirDayData(o)));
+            return list;
+        }
+
+        public static List<AirDayData> ToAirDayData(List<AQIDataPublishLive> src)
         {
             List<AirDayData> list = new List<AirDayData>();
             src.ForEach(o => list.Add(ToAirDayData(o)));
