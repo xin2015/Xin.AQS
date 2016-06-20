@@ -86,6 +86,20 @@ namespace Xin.AQS
             }
         }
 
+        public static AirDayData ToAirDayData(CityDayAQIPublishLive src)
+        {
+            AirDayData data = new AirDayData();
+            ToAirDayData(src, data);
+            return data;
+        }
+
+        public static List<AirDayData> ToAirDayData(List<CityDayAQIPublishLive> src)
+        {
+            List<AirDayData> list = new List<AirDayData>();
+            src.ForEach(o => list.Add(ToAirDayData(o)));
+            return list;
+        }
+
         public static void ToAirDayAQIData(CityDayAQIPublishLive source, AirDayAQIData target)
         {
             ToAirDayData(source, target);

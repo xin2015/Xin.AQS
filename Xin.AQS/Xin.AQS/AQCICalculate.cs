@@ -36,10 +36,10 @@ namespace Xin.AQS
             pollutantDic = new Dictionary<string, string>(){
                 {"SO2","二氧化硫"},
                 {"NO2","二氧化氮"},
-                {"PM10","颗粒物"},
+                {"PM10","颗粒物(PM10)"},
                 {"CO","一氧化碳"},
                 {"O38H","臭氧8小时"},
-                {"PM25","细颗粒物"}
+                {"PM25","细颗粒物(PM2.5)"}
             };
             propertiesOfAQCIResult = typeof(AQCIResult).GetProperties();
             propertiesForAQCICalculate = propertiesOfAQCIResult.Where(o => pollutantDic.ContainsKey(o.Name)).ToArray();
@@ -77,7 +77,7 @@ namespace Xin.AQS
             bool calculate = true;
             foreach (PropertyInfo property in propertiesForAQCICalculate)
             {
-                if (property.GetValue(data, null).Equals(null))
+                if (property.GetValue(data, null) == null)
                 {
                     calculate = false;
                     break;

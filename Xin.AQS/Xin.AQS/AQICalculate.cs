@@ -68,11 +68,11 @@ namespace Xin.AQS
             pollutantCodeNameDic = new Dictionary<string, string>(){
                 {"SO2","二氧化硫"},
                 {"NO2","二氧化氮"},
-                {"PM10","颗粒物"},
+                {"PM10","颗粒物(PM10)"},
                 {"CO","一氧化碳"},
                 {"O3","臭氧1小时"},
                 {"O38H","臭氧8小时"},
-                {"PM25","细颗粒物"}
+                {"PM25","细颗粒物(PM2.5)"}
             };
             dayPollutantLimitsDic = new Dictionary<string, int[]>(){
                 {"SO2",new int[]{ 0, 50, 150, 475, 800, 1600, 2100, 2620 }},// 二氧化硫（SO2）24小时平均浓度限值

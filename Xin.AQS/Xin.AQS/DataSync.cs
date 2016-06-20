@@ -14,11 +14,11 @@ namespace Xin.AQS
         private static string selectCountSqlString;
         static DataSync()
         {
-            selectCountSqlString = "select count(*) [Count] from {0} where Time = @Time";
+            selectCountSqlString = "select count(*) [Count] from {0} where {1} = @Time";
         }
-        public static bool HasData(string tableName, DateTime time)
+        public static bool HasData(string tableName, DateTime time, string timeName = "TimePoint")
         {
-            string cmdText = string.Format(selectCountSqlString, tableName);
+            string cmdText = string.Format(selectCountSqlString, tableName, timeName);
             SqlParameter parameter = new SqlParameter("@Time", time);
             int count = (int)SqlHelper.ExecuteScalar(cmdText, parameter);
             return count > 0;
@@ -50,7 +50,7 @@ namespace Xin.AQS
                         {
                             try
                             {
-                                DataTable dt = list.GetDataTable<CityAQIPublishLive>(liveTable);
+                                DataTable dt = list.GetDataTable<CityAQIPublishLive>(liveTable, "ExtensionData");
                                 SqlHelper.Insert(dt);
                                 MissingData.DeleteMissingData(liveTable, liveTable, time);
                                 #region Insert HistoryData
@@ -62,6 +62,7 @@ namespace Xin.AQS
                                         {
                                             dt.TableName = historyTable;
                                             SqlHelper.Insert(dt);
+                                            MissingData.DeleteMissingData(historyTable, historyTable, time);
                                         }
                                         catch (Exception e)
                                         {
@@ -118,7 +119,7 @@ namespace Xin.AQS
                         {
                             try
                             {
-                                DataTable dt = list.GetDataTable<CityAQIPublishLive>(tableName);
+                                DataTable dt = list.GetDataTable<CityAQIPublishLive>(tableName, "ExtensionData");
                                 SqlHelper.Insert(dt);
                                 MissingData.DeleteMissingData(tableName, tableName, time);
                             }
@@ -173,7 +174,7 @@ namespace Xin.AQS
                         {
                             try
                             {
-                                DataTable dt = list.GetDataTable<CityDayAQIPublishLive>(liveTable);
+                                DataTable dt = list.GetDataTable<CityDayAQIPublishLive>(liveTable, "ExtensionData");
                                 SqlHelper.Insert(dt);
                                 MissingData.DeleteMissingData(liveTable, liveTable, time);
                                 #region Insert HistoryData
@@ -185,6 +186,7 @@ namespace Xin.AQS
                                         {
                                             dt.TableName = historyTable;
                                             SqlHelper.Insert(dt);
+                                            MissingData.DeleteMissingData(historyTable, historyTable, time);
                                         }
                                         catch (Exception e)
                                         {
@@ -201,13 +203,14 @@ namespace Xin.AQS
                                 #region Insert RankData
                                 try
                                 {
-                                    if (!HasData(rankTable, time))
+                                    if (!HasData(rankTable, time, "Time"))
                                     {
                                         try
                                         {
                                             List<AirDayAQIRankData> rankDataList = DataConvert.ToAirDayAQIRankData(list);
-                                            dt = rankDataList.GetDataTable<AirDayAQIRankData>(rankTable);
+                                            dt = rankDataList.GetDataTable<AirDayAQIRankData>(rankTable, "Effect", "Measure");
                                             SqlHelper.Insert(dt);
+                                            MissingData.DeleteMissingData(rankTable, rankTable, time);
                                         }
                                         catch (Exception e)
                                         {
@@ -264,7 +267,7 @@ namespace Xin.AQS
                         {
                             try
                             {
-                                DataTable dt = list.GetDataTable<CityDayAQIPublishLive>(tableName);
+                                DataTable dt = list.GetDataTable<CityDayAQIPublishLive>(tableName, "ExtensionData");
                                 SqlHelper.Insert(dt);
                                 MissingData.DeleteMissingData(tableName, tableName, time);
                             }
@@ -297,7 +300,7 @@ namespace Xin.AQS
             string tableName = ConfigHelper.NationalCityDayAQIPublishRankData;
             try
             {
-                if (!HasData(tableName, time))
+                if (!HasData(tableName, time, "Time"))
                 {
                     try
                     {
@@ -307,8 +310,9 @@ namespace Xin.AQS
                             try
                             {
                                 List<AirDayAQIRankData> rankDataList = DataConvert.ToAirDayAQIRankData(list);
-                                DataTable dt = rankDataList.GetDataTable<AirDayAQIRankData>(tableName);
+                                DataTable dt = rankDataList.GetDataTable<AirDayAQIRankData>(tableName, "Effect", "Measure");
                                 SqlHelper.Insert(dt);
+                                MissingData.DeleteMissingData(tableName, tableName, time);
                             }
                             catch (Exception e)
                             {
@@ -340,7 +344,7 @@ namespace Xin.AQS
             DateTime beginTime = time.AddDays(1 - time.Day);
             try
             {
-                if (!HasData(tableName, time))
+                if (!HasData(tableName, time, "Time"))
                 {
                     try
                     {
@@ -350,7 +354,7 @@ namespace Xin.AQS
                             try
                             {
                                 List<AirDayAQCIRankData> rankDataList = new List<AirDayAQCIRankData>();
-                                List<AirDayAQIData> airDayAQIDataList = DataConvert.ToAirDayAQIData(list);
+                                List<AirDayData> airDayAQIDataList = DataConvert.ToAirDayData(list);
                                 var groups = airDayAQIDataList.GroupBy(o => o.Code);
                                 foreach (var group in groups)
                                 {
@@ -362,7 +366,7 @@ namespace Xin.AQS
                                     data.NO2 = DataHandle.Round(group.Average(o => o.NO2));
                                     data.PM10 = DataHandle.Round(group.Average(o => o.PM10));
                                     data.PM25 = DataHandle.Round(group.Average(o => o.PM25));
-                                    IEnumerable<AirDayAQIData> temp = group.Where(o => o.CO.HasValue).OrderBy(o => o.CO.Value);
+                                    IEnumerable<AirDayData> temp = group.Where(o => o.CO.HasValue).OrderBy(o => o.CO.Value);
                                     if (temp.Count() > 1)
                                     {
                                         data.CO = Math.Round(AQCICalculate.CalculatePercentile(temp.Select(o => o.CO.Value).ToArray(), 0.95M), 1);
@@ -378,6 +382,7 @@ namespace Xin.AQS
                                 DataHelper.UpdateRankByAQCI(rankDataList);
                                 DataTable dt = rankDataList.GetDataTable<AirDayAQCIRankData>(tableName);
                                 SqlHelper.Insert(dt);
+                                MissingData.DeleteMissingData(tableName, tableName, time);
                             }
                             catch (Exception e)
                             {
