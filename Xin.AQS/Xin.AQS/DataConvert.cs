@@ -48,49 +48,82 @@ namespace Xin.AQS
             return aqci;
         }
 
-        public static AirDayAQIRankData ToAirDayAQIRankData(CityDayAQIPublishLive src)
+        public static void ToAirDayData(CityDayAQIPublishLive source, AirDayData target)
         {
-            AirDayAQIRankData data = new AirDayAQIRankData();
-            data.Code = src.CityCode;
-            data.Name = src.Area;
-            data.Time = src.TimePoint;
+            target.Code = source.CityCode;
+            target.Name = source.Area;
+            target.Time = source.TimePoint;
             try
             {
-                if (src.SO2_24h != ConfigHelper.EmptyValueString)
+                if (source.SO2_24h != ConfigHelper.EmptyValueString)
                 {
-                    data.SO2 = decimal.Parse(src.SO2_24h);
+                    target.SO2 = decimal.Parse(source.SO2_24h);
                 }
-                if (src.NO2_24h != ConfigHelper.EmptyValueString)
+                if (source.NO2_24h != ConfigHelper.EmptyValueString)
                 {
-                    data.NO2 = decimal.Parse(src.NO2_24h);
+                    target.NO2 = decimal.Parse(source.NO2_24h);
                 }
-                if (src.PM10_24h != ConfigHelper.EmptyValueString)
+                if (source.PM10_24h != ConfigHelper.EmptyValueString)
                 {
-                    data.PM10 = decimal.Parse(src.PM10_24h);
+                    target.PM10 = decimal.Parse(source.PM10_24h);
                 }
-                if (src.CO_24h != ConfigHelper.EmptyValueString)
+                if (source.CO_24h != ConfigHelper.EmptyValueString)
                 {
-                    data.CO = decimal.Parse(src.CO_24h);
+                    target.CO = decimal.Parse(source.CO_24h);
                 }
-                if (src.O3_8h_24h != ConfigHelper.EmptyValueString)
+                if (source.O3_8h_24h != ConfigHelper.EmptyValueString)
                 {
-                    data.O38H = decimal.Parse(src.O3_8h_24h);
+                    target.O38H = decimal.Parse(source.O3_8h_24h);
                 }
-                if (src.PM2_5_24h != ConfigHelper.EmptyValueString)
+                if (source.PM2_5_24h != ConfigHelper.EmptyValueString)
                 {
-                    data.PM25 = decimal.Parse(src.PM2_5_24h);
-                }
-                if (src.AQI != ConfigHelper.EmptyValueString)
-                {
-                    data.AQI = int.Parse(src.AQI);
+                    target.PM25 = decimal.Parse(source.PM2_5_24h);
                 }
             }
             catch (Exception e)
             {
-                LogHelper.Logger.Error("CityDayAQIPublishLive To AirDayAQIRankData", e);
+                LogHelper.Logger.Error("CityDayAQIPublishLive To AirDayData", e);
             }
-            data.PrimaryPollutant = src.PrimaryPollutant;
-            data.Type = src.Quality;
+        }
+
+        public static void ToAirDayAQIData(CityDayAQIPublishLive source, AirDayAQIData target)
+        {
+            ToAirDayData(source, target);
+            try
+            {
+                if (source.AQI != ConfigHelper.EmptyValueString)
+                {
+                    target.AQI = int.Parse(source.AQI);
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Logger.Error("CityDayAQIPublishLive To AirDayAQIData", e);
+            }
+            target.PrimaryPollutant = source.PrimaryPollutant;
+            target.Type = source.Quality;
+            target.Effect = source.Unheathful;
+            target.Measure = source.Measure;
+        }
+
+        public static AirDayAQIData ToAirDayAQIData(CityDayAQIPublishLive src)
+        {
+            AirDayAQIData data = new AirDayAQIData();
+            ToAirDayAQIData(src, data);
+            return data;
+        }
+
+        public static List<AirDayAQIData> ToAirDayAQIData(List<CityDayAQIPublishLive> src)
+        {
+            List<AirDayAQIData> list = new List<AirDayAQIData>();
+            src.ForEach(o => list.Add(ToAirDayAQIData(o)));
+            return list;
+        }
+
+        public static AirDayAQIRankData ToAirDayAQIRankData(CityDayAQIPublishLive src)
+        {
+            AirDayAQIRankData data = new AirDayAQIRankData();
+            ToAirDayAQIData(src, data);
             return data;
         }
 

@@ -26,5 +26,26 @@ namespace Xin.AQS
             });
             list.Where(o => !o.AQI.HasValue).ToList().ForEach(o => o.Rank = order);
         }
+
+        public static void UpdateRankByAQCI(List<AirDayAQCIRankData> list)
+        {
+            decimal currentAQCI = 0;
+            int currentRank = 1, order = 1;
+            List<AirDayAQCIRankData> listWithAQI = list.Where(o => o.AQCI.HasValue).OrderBy(o => o.AQCI.Value).ToList();
+            listWithAQI.ForEach(o =>
+            {
+                if (o.AQCI.Value > currentAQCI)
+                {
+                    currentAQCI = o.AQCI.Value;
+                    o.Rank = currentRank = order;
+                }
+                else
+                {
+                    o.Rank = currentRank;
+                }
+                order++;
+            });
+            list.Where(o => !o.AQCI.HasValue).ToList().ForEach(o => o.Rank = order);
+        }
     }
 }

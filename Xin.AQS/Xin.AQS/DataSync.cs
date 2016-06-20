@@ -15,7 +15,6 @@ namespace Xin.AQS
         static DataSync()
         {
             selectCountSqlString = "select count(*) [Count] from {0} where Time = @Time";
-
         }
         public static bool HasData(string tableName, DateTime time)
         {
@@ -27,11 +26,11 @@ namespace Xin.AQS
 
         public static void SyncNationalCityAQIPublishData(DateTime time, bool live = true)
         {
-            string liveTableName = "NationalCityAQIPublishLive";
-            string historyTableName = "NationalCityAQIPublishHistory";
+            string liveTable = ConfigHelper.NationalCityAQIPublishLive;
+            string historyTable = ConfigHelper.NationalCityAQIPublishHistory;
             try
             {
-                if (!HasData(liveTableName, time))
+                if (!HasData(liveTable, time))
                 {
                     try
                     {
@@ -51,47 +50,47 @@ namespace Xin.AQS
                         {
                             try
                             {
-                                DataTable dt = list.GetDataTable<CityAQIPublishLive>(liveTableName);
+                                DataTable dt = list.GetDataTable<CityAQIPublishLive>(liveTable);
                                 SqlHelper.Insert(dt);
-                                MissingData.DeleteMissingData(liveTableName, liveTableName, time);
+                                MissingData.DeleteMissingData(liveTable, liveTable, time);
                                 #region Insert HistoryData
                                 try
                                 {
-                                    if (!HasData(historyTableName, time))
+                                    if (!HasData(historyTable, time))
                                     {
                                         try
                                         {
-                                            dt.TableName = historyTableName;
+                                            dt.TableName = historyTable;
                                             SqlHelper.Insert(dt);
                                         }
                                         catch (Exception e)
                                         {
-                                            LogHelper.Logger.Error(string.Format("Insert {0} failed.", historyTableName), e);
-                                            MissingData.InsertOrUpateMissingData(historyTableName, historyTableName, time, e.Message);
+                                            LogHelper.Logger.Error(string.Format("Insert {0} failed.", historyTable), e);
+                                            MissingData.InsertOrUpateMissingData(historyTable, historyTable, time, e.Message);
                                         }
                                     }
                                 }
                                 catch (Exception e)
                                 {
-                                    LogHelper.Logger.Error(string.Format("Query {0} failed.", historyTableName), e);
+                                    LogHelper.Logger.Error(string.Format("Query {0} failed.", historyTable), e);
                                 }
                                 #endregion
                             }
                             catch (Exception e)
                             {
-                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", liveTableName), e);
-                                MissingData.InsertOrUpateMissingData(liveTableName, liveTableName, time, e.Message);
+                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", liveTable), e);
+                                MissingData.InsertOrUpateMissingData(liveTable, liveTable, time, e.Message);
                             }
                         }
                         else
                         {
-                            MissingData.InsertOrUpateMissingData(liveTableName, liveTableName, time);
+                            MissingData.InsertOrUpateMissingData(liveTable, liveTable, time);
                         }
                     }
                     catch (Exception e)
                     {
-                        LogHelper.Logger.Error(string.Format("Get {0} failed.", liveTableName), e);
-                        MissingData.InsertOrUpateMissingData(liveTableName, liveTableName, time, e.Message);
+                        LogHelper.Logger.Error(string.Format("Get {0} failed.", liveTable), e);
+                        MissingData.InsertOrUpateMissingData(liveTable, liveTable, time, e.Message);
                     }
                 }
             }
@@ -103,7 +102,7 @@ namespace Xin.AQS
 
         public static void SyncNationalCityAQIPublishHistoryData(DateTime time)
         {
-            string tableName = "NationalCityAQIPublishHistory";
+            string tableName = ConfigHelper.NationalCityAQIPublishHistory;
             try
             {
                 if (!HasData(tableName, time))
@@ -149,12 +148,12 @@ namespace Xin.AQS
 
         public static void SyncNationalCityDayAQIPublishData(DateTime time, bool live = true)
         {
-            string liveTableName = "NationalCityDayAQIPublishLive";
-            string historyTableName = "NationalCityDayAQIPublishHistory";
-            string rankTableName = "NationalCityDayAQIPublishRankData";
+            string liveTable = ConfigHelper.NationalCityDayAQIPublishLive;
+            string historyTable = ConfigHelper.NationalCityDayAQIPublishHistory;
+            string rankTable = ConfigHelper.NationalCityDayAQIPublishRankData;
             try
             {
-                if (!HasData(liveTableName, time))
+                if (!HasData(liveTable, time))
                 {
                     try
                     {
@@ -174,70 +173,70 @@ namespace Xin.AQS
                         {
                             try
                             {
-                                DataTable dt = list.GetDataTable<CityDayAQIPublishLive>(liveTableName);
+                                DataTable dt = list.GetDataTable<CityDayAQIPublishLive>(liveTable);
                                 SqlHelper.Insert(dt);
-                                MissingData.DeleteMissingData(liveTableName, liveTableName, time);
+                                MissingData.DeleteMissingData(liveTable, liveTable, time);
                                 #region Insert HistoryData
                                 try
                                 {
-                                    if (!HasData(historyTableName, time))
+                                    if (!HasData(historyTable, time))
                                     {
                                         try
                                         {
-                                            dt.TableName = historyTableName;
+                                            dt.TableName = historyTable;
                                             SqlHelper.Insert(dt);
                                         }
                                         catch (Exception e)
                                         {
-                                            LogHelper.Logger.Error(string.Format("Insert {0} failed.", historyTableName), e);
-                                            MissingData.InsertOrUpateMissingData(historyTableName, historyTableName, time, e.Message);
+                                            LogHelper.Logger.Error(string.Format("Insert {0} failed.", historyTable), e);
+                                            MissingData.InsertOrUpateMissingData(historyTable, historyTable, time, e.Message);
                                         }
                                     }
                                 }
                                 catch (Exception e)
                                 {
-                                    LogHelper.Logger.Error(string.Format("Query {0} failed.", historyTableName), e);
+                                    LogHelper.Logger.Error(string.Format("Query {0} failed.", historyTable), e);
                                 }
                                 #endregion
                                 #region Insert RankData
                                 try
                                 {
-                                    if (!HasData(rankTableName, time))
+                                    if (!HasData(rankTable, time))
                                     {
                                         try
                                         {
                                             List<AirDayAQIRankData> rankDataList = DataConvert.ToAirDayAQIRankData(list);
-                                            dt = rankDataList.GetDataTable<AirDayAQIRankData>(rankTableName);
+                                            dt = rankDataList.GetDataTable<AirDayAQIRankData>(rankTable);
                                             SqlHelper.Insert(dt);
                                         }
                                         catch (Exception e)
                                         {
-                                            LogHelper.Logger.Error(string.Format("Insert {0} failed.", rankTableName), e);
-                                            MissingData.InsertOrUpateMissingData(rankTableName, rankTableName, time, e.Message);
+                                            LogHelper.Logger.Error(string.Format("Insert {0} failed.", rankTable), e);
+                                            MissingData.InsertOrUpateMissingData(rankTable, rankTable, time, e.Message);
                                         }
                                     }
                                 }
                                 catch (Exception e)
                                 {
-                                    LogHelper.Logger.Error(string.Format("Query {0} failed.", historyTableName), e);
+                                    LogHelper.Logger.Error(string.Format("Query {0} failed.", rankTable), e);
                                 }
                                 #endregion
                             }
                             catch (Exception e)
                             {
-                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", liveTableName), e);
-                                MissingData.InsertOrUpateMissingData(liveTableName, liveTableName, time, e.Message);
+                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", liveTable), e);
+                                MissingData.InsertOrUpateMissingData(liveTable, liveTable, time, e.Message);
                             }
                         }
                         else
                         {
-                            MissingData.InsertOrUpateMissingData(liveTableName, liveTableName, time);
+                            MissingData.InsertOrUpateMissingData(liveTable, liveTable, time);
                         }
                     }
                     catch (Exception e)
                     {
-                        LogHelper.Logger.Error(string.Format("Get {0} failed.", liveTableName), e);
-                        MissingData.InsertOrUpateMissingData(liveTableName, liveTableName, time, e.Message);
+                        LogHelper.Logger.Error(string.Format("Get {0} failed.", liveTable), e);
+                        MissingData.InsertOrUpateMissingData(liveTable, liveTable, time, e.Message);
                     }
                 }
             }
@@ -249,7 +248,7 @@ namespace Xin.AQS
 
         public static void SyncNationalCityDayAQIPublishHistoryData(DateTime time)
         {
-            string tableName = "NationalCityDayAQIPublishHistory";
+            string tableName = ConfigHelper.NationalCityDayAQIPublishHistory;
             try
             {
                 if (!HasData(tableName, time))
@@ -295,20 +294,89 @@ namespace Xin.AQS
 
         public static void SyncNationalCityDayAQIPublishRankData(DateTime time)
         {
-            string tableName = "NationalCityDayAQIPublishRankData";
+            string tableName = ConfigHelper.NationalCityDayAQIPublishRankData;
             try
             {
                 if (!HasData(tableName, time))
                 {
                     try
                     {
-                        List<CityDayAQIPublishLive> list = DataQuery.GetCityDayAQIPublishLive(time);
+                        List<CityDayAQIPublishLive> list = DataQuery.GetHistory<CityDayAQIPublishLive>(ConfigHelper.NationalCityDayAQIPublishHistory, time, time);
                         if (list.Any())
                         {
                             try
                             {
                                 List<AirDayAQIRankData> rankDataList = DataConvert.ToAirDayAQIRankData(list);
                                 DataTable dt = rankDataList.GetDataTable<AirDayAQIRankData>(tableName);
+                                SqlHelper.Insert(dt);
+                            }
+                            catch (Exception e)
+                            {
+                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", tableName), e);
+                                MissingData.InsertOrUpateMissingData(tableName, tableName, time, e.Message);
+                            }
+                        }
+                        else
+                        {
+                            MissingData.InsertOrUpateMissingData(tableName, tableName, time);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogHelper.Logger.Error(string.Format("Get {0} failed.", tableName), e);
+                        MissingData.InsertOrUpateMissingData(tableName, tableName, time, e.Message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Logger.Error("SyncNationalCityDayAQIPublishRankData failed.", e);
+            }
+        }
+
+        public static void SyncNationalCityDayAQCIPublishRankData(DateTime time)
+        {
+            string tableName = ConfigHelper.NationalCityDayAQCIPublishRankData;
+            DateTime beginTime = time.AddDays(1 - time.Day);
+            try
+            {
+                if (!HasData(tableName, time))
+                {
+                    try
+                    {
+                        List<CityDayAQIPublishLive> list = DataQuery.GetHistory<CityDayAQIPublishLive>(ConfigHelper.NationalCityDayAQIPublishHistory, beginTime, time);
+                        if (list.Any())
+                        {
+                            try
+                            {
+                                List<AirDayAQCIRankData> rankDataList = new List<AirDayAQCIRankData>();
+                                List<AirDayAQIData> airDayAQIDataList = DataConvert.ToAirDayAQIData(list);
+                                var groups = airDayAQIDataList.GroupBy(o => o.Code);
+                                foreach (var group in groups)
+                                {
+                                    AirDayAQCIRankData data = new AirDayAQCIRankData();
+                                    data.Code = group.Key;
+                                    data.Name = group.First().Name;
+                                    data.Time = time;
+                                    data.SO2 = DataHandle.Round(group.Average(o => o.SO2));
+                                    data.NO2 = DataHandle.Round(group.Average(o => o.NO2));
+                                    data.PM10 = DataHandle.Round(group.Average(o => o.PM10));
+                                    data.PM25 = DataHandle.Round(group.Average(o => o.PM25));
+                                    IEnumerable<AirDayAQIData> temp = group.Where(o => o.CO.HasValue).OrderBy(o => o.CO.Value);
+                                    if (temp.Count() > 1)
+                                    {
+                                        data.CO = Math.Round(AQCICalculate.CalculatePercentile(temp.Select(o => o.CO.Value).ToArray(), 0.95M), 1);
+                                    }
+                                    temp = group.Where(o => o.O38H.HasValue).OrderBy(o => o.O38H.Value);
+                                    if (temp.Count() > 1)
+                                    {
+                                        data.O38H = Math.Round(AQCICalculate.CalculatePercentile(temp.Select(o => o.O38H.Value).ToArray(), 0.90M));
+                                    }
+                                    data.GetAQCI();
+                                    rankDataList.Add(data);
+                                }
+                                DataHelper.UpdateRankByAQCI(rankDataList);
+                                DataTable dt = rankDataList.GetDataTable<AirDayAQCIRankData>(tableName);
                                 SqlHelper.Insert(dt);
                             }
                             catch (Exception e)
