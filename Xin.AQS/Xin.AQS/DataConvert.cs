@@ -87,11 +87,19 @@ namespace Xin.AQS
             }
             catch (Exception e)
             {
-                LogHelper.Logger.Error("", e);
+                LogHelper.Logger.Error("CityDayAQIPublishLive To AirDayAQIRankData", e);
             }
             data.PrimaryPollutant = src.PrimaryPollutant;
             data.Type = src.Quality;
             return data;
+        }
+
+        public static List<AirDayAQIRankData> ToAirDayAQIRankData(List<CityDayAQIPublishLive> src)
+        {
+            List<AirDayAQIRankData> list = new List<AirDayAQIRankData>();
+            src.ForEach(o => list.Add(ToAirDayAQIRankData(o)));
+            DataHelper.UpdateRankByAQI(list);
+            return list;
         }
     }
 }

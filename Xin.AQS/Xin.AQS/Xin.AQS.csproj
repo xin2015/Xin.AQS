@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\..\组件\Xin.Basic\log4net.dll</HintPath>
+      <HintPath>..\..\..\..\组件\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -46,7 +46,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Xin.Basic">
-      <HintPath>..\..\..\..\组件\Xin.Basic\Xin.Basic.dll</HintPath>
+      <HintPath>..\..\..\..\组件\Xin.Basic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +66,8 @@
     <Compile Include="DataConvert.cs" />
     <Compile Include="AirData.cs" />
     <Compile Include="DataHandle.cs" />
+    <Compile Include="DataHelper.cs" />
+    <Compile Include="DataQuery.cs" />
     <Compile Include="DataSync.cs" />
     <Compile Include="DayAQIResult.cs" />
     <Compile Include="HourAQIResult.cs" />
