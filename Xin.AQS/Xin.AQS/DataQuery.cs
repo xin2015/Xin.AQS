@@ -56,18 +56,7 @@ namespace Xin.AQS
 
         public static List<AirDayAQIRankData> GetNationalCityDayAQIPublishRankData()
         {
-            List<AirDayAQIRankData> list;
-            try
-            {
-                string cmdText = string.Format(selectRankText, ConfigHelper.NationalCityDayAQIPublishRankData);
-                list = SqlHelper.ExecuteDataTable(cmdText).GetList<AirDayAQIRankData>();
-            }
-            catch (Exception e)
-            {
-                list = new List<AirDayAQIRankData>();
-                LogHelper.Logger.Error("GetNationalCityDayAQIPublishRankData failed.", e);
-            }
-            return list;
+            return GetRankData<AirDayAQIRankData>(ConfigHelper.NationalCityDayAQIPublishRankData);
         }
 
         public static List<AirDayAQIRankData> GetNationalCityDayAQIPublishRankDataForProvince(string provinceCodePre)
@@ -90,34 +79,40 @@ namespace Xin.AQS
 
         public static List<AirDayAQIRankData> GetNationalCityDayAQIPublishRankDataForConcerned(string[] cityNames)
         {
-            List<AirDayAQIRankData> list;
-            try
-            {
-                string cmdText = string.Format(selectRankText, ConfigHelper.NationalCityDayAQIPublishRankData);
-                list = SqlHelper.ExecuteDataTable(cmdText).GetList<AirDayAQIRankData>().Where(o => cityNames.Contains(o.Name)).ToList();
-                DataHelper.UpdateRank(list);
-            }
-            catch (Exception e)
-            {
-                list = new List<AirDayAQIRankData>();
-                LogHelper.Logger.Error("GetNationalCityDayAQIPublishRankDataForProvince failed.", e);
-            }
+            List<AirDayAQIRankData> list = GetRankData<AirDayAQIRankData>(ConfigHelper.NationalCityDayAQIPublishRankData);
+            list = list.Where(o => cityNames.Contains(o.Name)).ToList();
+            DataHelper.UpdateRank(list);
             return list;
         }
 
         public static List<AirDayAQCIRankData> GetNationalCityDayAQCIPublishRankData()
         {
+            return GetRankData<AirDayAQCIRankData>(ConfigHelper.NationalCityDayAQCIPublishRankData);
+        }
+
+        public static List<AirDayAQCIRankData> GetNationalCityDayAQCIPublishRankDataForProvince(string provinceCodePre)
+        {
             List<AirDayAQCIRankData> list;
             try
             {
-                string cmdText = string.Format(selectRankText, ConfigHelper.NationalCityDayAQCIPublishRankData);
-                list = SqlHelper.ExecuteDataTable(cmdText).GetList<AirDayAQCIRankData>();
+                string cmdText = string.Format(selectRankForProvinceText, ConfigHelper.NationalCityDayAQCIPublishRankData);
+                SqlParameter parameter = new SqlParameter("@CodeFormat", string.Format("{0}%", provinceCodePre));
+                list = SqlHelper.ExecuteDataTable(cmdText, parameter).GetList<AirDayAQCIRankData>();
+                DataHelper.UpdateRank(list);
             }
             catch (Exception e)
             {
                 list = new List<AirDayAQCIRankData>();
-                LogHelper.Logger.Error("GetNationalCityDayAQCIPublishRankData failed.", e);
+                LogHelper.Logger.Error("GetNationalCityDayAQCIPublishRankDataForProvince failed.", e);
             }
+            return list;
+        }
+
+        public static List<AirDayAQCIRankData> GetNationalCityDayAQCIPublishRankDataForConcerned(string[] cityNames)
+        {
+            List<AirDayAQCIRankData> list = GetRankData<AirDayAQCIRankData>(ConfigHelper.NationalCityDayAQCIPublishRankData);
+            list = list.Where(o => cityNames.Contains(o.Name)).ToList();
+            DataHelper.UpdateRank(list);
             return list;
         }
 
@@ -146,6 +141,32 @@ namespace Xin.AQS
             }
             dt.TableName = tableName;
             return dt;
+        }
+
+        public static List<AirDayAQIRankData> GetDistrictDayAQIPublishRankData()
+        {
+            return GetRankData<AirDayAQIRankData>(ConfigHelper.DistrictDayAQIPublishRankData);
+        }
+
+        public static List<AirDayAQCIRankData> GetDistrictDayAQCIPublishRankData()
+        {
+            return GetRankData<AirDayAQCIRankData>(ConfigHelper.DistrictDayAQCIPublishRankData);
+        }
+
+        private static List<T> GetRankData<T>(string tableName) where T:class,new()
+        {
+            List<T> list;
+            try
+            {
+                string cmdText = string.Format(selectRankText, tableName);
+                list = SqlHelper.ExecuteDataTable(cmdText).GetList<T>();
+            }
+            catch (Exception e)
+            {
+                list = new List<T>();
+                LogHelper.Logger.Error(string.Format("Get {0} failed.", tableName), e);
+            }
+            return list;
         }
     }
 }
