@@ -5,10 +5,6 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xin.AQS", "Xin.AQS\Xin.AQS.csproj", "{A9E75F4D-8924-4724-BB43-B8693C5F13F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xin.AQS.UnitTest", "Xin.AQS.UnitTest\Xin.AQS.UnitTest.csproj", "{B9523E0A-0CA2-4E85-B095-B78860346E11}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xin.AQS.Service", "Xin.AQS.Service\Xin.AQS.Service.csproj", "{9798F2CA-2FC6-4FA9-8EAE-CC53DDA34227}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{A9E75F4D-8924-4724-BB43-B8693C5F13F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E75F4D-8924-4724-BB43-B8693C5F13F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9E75F4D-8924-4724-BB43-B8693C5F13F2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9523E0A-0CA2-4E85-B095-B78860346E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9523E0A-0CA2-4E85-B095-B78860346E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9523E0A-0CA2-4E85-B095-B78860346E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9523E0A-0CA2-4E85-B095-B78860346E11}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9798F2CA-2FC6-4FA9-8EAE-CC53DDA34227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9798F2CA-2FC6-4FA9-8EAE-CC53DDA34227}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9798F2CA-2FC6-4FA9-8EAE-CC53DDA34227}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9798F2CA-2FC6-4FA9-8EAE-CC53DDA34227}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
