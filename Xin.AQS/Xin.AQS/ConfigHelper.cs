@@ -71,7 +71,7 @@ namespace Xin.AQS
             NationalCityDayAQIPublishRankData = "NationalCityDayAQIPublishRankData";
             NationalCityDayAQCIPublishRankData = "NationalCityDayAQCIPublishRankData";
             AQIDataPublishLive = "AQIDataPublishLive";
-            AQIDataPublishHistory = "AQIDataPublishLive";
+            AQIDataPublishHistory = "AQIDataPublishHistory";
             DistrictDayAQIPublishHistoryData = "DistrictDayAQIPublishHistoryData";
             DistrictDayAQIPublishRankData = "DistrictDayAQIPublishRankData";
             DistrictDayAQCIPublishRankData = "DistrictDayAQCIPublishRankData";

@@ -54,6 +54,7 @@ namespace Xin.AQS
                             try
                             {
                                 DataTable dt = list.GetDataTable<CityAQIPublishLive>(liveTable, "ExtensionData");
+                                SqlHelper.ExecuteNonQuery(string.Format("delete {0}", liveTable));
                                 SqlHelper.Insert(dt);
                                 MissingData.Delete(liveTable, liveTable, time);
                                 #region Insert HistoryData
@@ -178,6 +179,7 @@ namespace Xin.AQS
                             try
                             {
                                 DataTable dt = list.GetDataTable<CityDayAQIPublishLive>(liveTable, "ExtensionData");
+                                SqlHelper.ExecuteNonQuery(string.Format("delete {0}", liveTable));
                                 SqlHelper.Insert(dt);
                                 MissingData.Delete(liveTable, liveTable, time);
                                 #region Insert HistoryData
@@ -392,7 +394,7 @@ namespace Xin.AQS
         public static void SyncDistrictDayAQIPublishData(DateTime time)
         {
             string tableName = ConfigHelper.DistrictDayAQIPublishHistoryData;
-            string rankTable=ConfigHelper.DistrictDayAQIPublishRankData;
+            string rankTable = ConfigHelper.DistrictDayAQIPublishRankData;
             try
             {
                 if (!HasData(tableName, time, "Time"))
@@ -434,7 +436,7 @@ namespace Xin.AQS
                                 MissingData.Delete(tableName, tableName, time);
                                 try
                                 {
-                                    if (!HasData(rankTable, time))
+                                    if (!HasData(rankTable, time, "Time"))
                                     {
                                         try
                                         {
@@ -576,15 +578,15 @@ namespace Xin.AQS
             {
                 switch (o.TableName)
                 {
-                    case "NationalCityAQIPublishLive":         SyncNationalCityAQIPublishData(o.Time, false); break;
-                    case "NationalCityAQIPublishHistory":      SyncNationalCityAQIPublishHistoryData(o.Time); break;
-                    case "NationalCityDayAQIPublishLive":      SyncNationalCityDayAQIPublishData(o.Time, false); break;
-                    case "NationalCityDayAQIPublishHistory":   SyncNationalCityDayAQIPublishHistoryData(o.Time); break;
-                    case "NationalCityDayAQIPublishRankData":  SyncNationalCityDayAQIPublishRankData(o.Time); break;
+                    case "NationalCityAQIPublishLive": SyncNationalCityAQIPublishData(o.Time, false); break;
+                    case "NationalCityAQIPublishHistory": SyncNationalCityAQIPublishHistoryData(o.Time); break;
+                    case "NationalCityDayAQIPublishLive": SyncNationalCityDayAQIPublishData(o.Time, false); break;
+                    case "NationalCityDayAQIPublishHistory": SyncNationalCityDayAQIPublishHistoryData(o.Time); break;
+                    case "NationalCityDayAQIPublishRankData": SyncNationalCityDayAQIPublishRankData(o.Time); break;
                     case "NationalCityDayAQCIPublishRankData": SyncNationalCityDayAQCIPublishRankData(o.Time); break;
-                    case "DistrictDayAQIPublishHistoryData":   SyncDistrictDayAQIPublishData(o.Time); break;
-                    case "DistrictDayAQIPublishRankData":      SyncDistrictDayAQIPublishRankData(o.Time); break;
-                    case "DistrictDayAQCIPublishRankData":     SyncDistrictDayAQCIPublishRankData(o.Time); break;
+                    case "DistrictDayAQIPublishHistoryData": SyncDistrictDayAQIPublishData(o.Time); break;
+                    case "DistrictDayAQIPublishRankData": SyncDistrictDayAQIPublishRankData(o.Time); break;
+                    case "DistrictDayAQCIPublishRankData": SyncDistrictDayAQCIPublishRankData(o.Time); break;
                     default: break;
                 }
             });
