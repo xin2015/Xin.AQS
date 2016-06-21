@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -118,6 +119,33 @@ namespace Xin.AQS
                 LogHelper.Logger.Error("GetNationalCityDayAQCIPublishRankData failed.", e);
             }
             return list;
+        }
+
+        public static List<T> GetDistrictDayAQIPublishHistoryData<T>(DateTime beginTime, DateTime endTime) where T:class, new()
+        {
+            DataTable dt = GetDistrictDayAQIPublishHistoryDataDT(beginTime, endTime);
+            return dt.GetList<T>();
+        }
+        public static DataTable GetDistrictDayAQIPublishHistoryDataDT(DateTime beginTime, DateTime endTime)
+        {
+            string tableName = ConfigHelper.DistrictDayAQIPublishHistoryData;
+            string cmdText = string.Format(selectHistoryText.Replace("TimePoint", "Time"), tableName);
+            SqlParameter[] parameters = new SqlParameter[]{
+                new SqlParameter("@BeginTime",beginTime),
+                new SqlParameter("@EndTime",endTime)
+            };
+            DataTable dt;
+            try
+            {
+                dt = SqlHelper.ExecuteDataTable(cmdText, parameters);
+            }
+            catch (Exception e)
+            {
+                dt = new DataTable();
+                LogHelper.Logger.Error("GetDistrictDayAQIPublishHistoryData failed.", e);
+            }
+            dt.TableName = tableName;
+            return dt;
         }
     }
 }

@@ -13,10 +13,10 @@ namespace Xin.AQS
     /// </summary>
     public class MissingData
     {
-        private static string selectText = "select * from MissingData where TableName=@TableName and Code=@Code and Time=@Time";
-        private static string deleteText = "delete MissingData where TableName=@TableName and Code=@Code and Time=@Time";
-        private static string queryText = "select * from MissingData where TableName=@TableName and MissTimes < 100";
-
+        private static string selectByPrimaryKeyText = "select * from MissingData where TableName=@TableName and Code=@Code and Time=@Time";
+        private static string deleteByPrimaryKeyText = "delete MissingData where TableName=@TableName and Code=@Code and Time=@Time";
+        private static string selectByTableNameText = "select * from MissingData where TableName=@TableName and MissTimes < 100";
+        private static string selectText = "select * from MissingData where MissTimes<100";
         /// <summary>
         /// 表名
         /// </summary>
@@ -49,20 +49,20 @@ namespace Xin.AQS
             Exception = exception;
         }
 
-        public static void InsertOrUpateMissingData(string tableName, string code, DateTime time, string exception = "")
+        public static void InsertOrUpate(string tableName, string code, DateTime time, string exception = "")
         {
             SqlParameter[] parameters = new SqlParameter[]{
                 new SqlParameter("@TableName", tableName),
                 new SqlParameter("@Code", code),
                 new SqlParameter("@Time", time)
             };
-            DataTable dt = SqlHelper.ExecuteDataTable(selectText, parameters);
+            DataTable dt = SqlHelper.ExecuteDataTable(selectByPrimaryKeyText, parameters);
             dt.TableName = "MissingData";
             if (dt.Rows.Count > 0)
             {
                 dt.Rows[0]["MissTimes"] = (int)dt.Rows[0]["MissTimes"] + 1;
                 dt.Rows[0]["Exception"] = exception;
-                DeleteMissingData(tableName, code, time);
+                Delete(tableName, code, time);
             }
             else
             {
@@ -77,30 +77,26 @@ namespace Xin.AQS
             SqlHelper.Insert(dt);
         }
 
-        public static void DeleteMissingData(string tableName, string code, DateTime time)
+        public static void Delete(string tableName, string code, DateTime time)
         {
             SqlParameter[] parameters = new SqlParameter[]{
                 new SqlParameter("@TableName", tableName),
                 new SqlParameter("@Code", code),
                 new SqlParameter("@Time", time)
             };
-            SqlHelper.ExecuteNonQuery(deleteText, parameters);
+            SqlHelper.ExecuteNonQuery(deleteByPrimaryKeyText, parameters);
         }
 
-        public static void DeleteMissingData(MissingData missingData)
-        {
-            SqlParameter[] parameters = new SqlParameter[]{
-                new SqlParameter("@TableName", missingData.TableName),
-                new SqlParameter("@Code", missingData.Code),
-                new SqlParameter("@Time", missingData.Time)
-            };
-            SqlHelper.ExecuteNonQuery(deleteText, parameters);
-        }
-
-        public static List<MissingData> QueryMissingData(string tableName)
+        public static List<MissingData> GetList(string tableName)
         {
             SqlParameter parameter = new SqlParameter("@TableName", tableName);
-            List<MissingData> list = SqlHelper.ExecuteDataTable(queryText, parameter).GetList<MissingData>();
+            List<MissingData> list = SqlHelper.ExecuteDataTable(selectByTableNameText, parameter).GetList<MissingData>();
+            return list;
+        }
+
+        public static List<MissingData> GetList()
+        {
+            List<MissingData> list = SqlHelper.ExecuteDataTable(selectText).GetList<MissingData>();
             return list;
         }
     }
