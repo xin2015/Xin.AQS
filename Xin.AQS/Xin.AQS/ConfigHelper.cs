@@ -57,6 +57,10 @@ namespace Xin.AQS
         /// </summary>
         public static string CityDayAQIPublish { get; private set; }
         /// <summary>
+        /// 区域小时AQI发布表
+        /// </summary>
+        public static string DistrictHourAQIPublishData { get; set; }
+        /// <summary>
         /// 区域日均AQI发布history表
         /// </summary>
         public static string DistrictDayAQIPublishHistoryData { get; set; }
@@ -85,6 +89,7 @@ namespace Xin.AQS
             DistrictDayAQIPublishHistoryData = "DistrictDayAQIPublishHistoryData";
             DistrictDayAQIPublishRankData = "DistrictDayAQIPublishRankData";
             DistrictDayAQCIPublishRankData = "DistrictDayAQCIPublishRankData";
+            DistrictHourAQIPublishData = "DistrictHourAQIPublishData";
         }
     }
 }

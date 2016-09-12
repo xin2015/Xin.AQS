@@ -153,6 +153,44 @@ namespace Xin.AQS
             return GetRankData<AirDayAQCIRankData>(ConfigHelper.DistrictDayAQCIPublishRankData);
         }
 
+        public static List<AirHourAQIData> GetDistrictHourAQIPublishData(string districtCode, DateTime beginTime, DateTime endTime)
+        {
+            List<AirHourAQIData> list;
+            try
+            {
+                string cmdText = string.Format("select * from {0} where Code = @Code, Time >= @BeginTime and Time <= @EndTime", ConfigHelper.DistrictHourAQIPublishData);
+                SqlParameter[] parameters = new SqlParameter[]{
+                    new SqlParameter("@Code",districtCode),
+                    new SqlParameter("@BeginTime",beginTime),
+                    new SqlParameter("@EndTime",endTime)
+                };
+                list = SqlHelper.ExecuteList<AirHourAQIData>(cmdText, parameters);
+            }
+            catch (Exception e)
+            {
+                list = new List<AirHourAQIData>();
+                LogHelper.Logger.Error("GetDistrictHourAQIPublishData failed.", e);
+            }
+            return list;
+        }
+
+        public static List<AirHourAQIData> GetDistrictHourAQIPublishData(DateTime time)
+        {
+            List<AirHourAQIData> list;
+            try
+            {
+                string cmdText = string.Format("select * from {0} where Time = @Time",ConfigHelper.DistrictHourAQIPublishData);
+                SqlParameter param = new SqlParameter("@Time", time);
+                list = SqlHelper.ExecuteList<AirHourAQIData>(cmdText, param);
+            }
+            catch (Exception e)
+            {
+                list = new List<AirHourAQIData>();
+                LogHelper.Logger.Error("GetDistrictHourAQIPublishData failed.", e);
+            }
+            return list;
+        }
+
         private static List<T> GetRankData<T>(string tableName) where T:class,new()
         {
             List<T> list;

@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\..\..\组件\log4net.dll</HintPath>
+      <HintPath>..\..\..\..\MeiZhouForecast\源码\App\AQMPA\lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -46,7 +46,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Xin.Basic">
-      <HintPath>..\..\..\..\组件\Xin.Basic.dll</HintPath>
+      <HintPath>..\..\..\..\Module\4\Xin.Basic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

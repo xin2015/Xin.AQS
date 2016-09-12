@@ -391,6 +391,73 @@ namespace Xin.AQS
             }
         }
 
+        public static void SyncDistrictHourAQIPublishData(DateTime time)
+        {
+            string tableName = ConfigHelper.DistrictHourAQIPublishData;
+            try
+            {
+                if (!HasData(tableName, time, "Time"))
+                {
+                    try
+                    {
+                        DateTime timePoint = time.AddHours(1);
+                        List<AQIDataPublishLive> stationDataList = DataQuery.GetHistory<AQIDataPublishLive>(ConfigHelper.AQIDataPublishHistory, timePoint, timePoint);
+                        if (stationDataList.Any())
+                        {
+                            try
+                            {
+                                List<AirHourData> stationHourDataList = DataConvert.ToAirHourData(stationDataList);
+                                List<District> districtList = District.GetList();
+                                List<Station> stationList = Station.GetList();
+                                List<AirHourAQIData> list = new List<AirHourAQIData>();
+                                districtList.ForEach(o =>
+                                {
+                                    string[] stationCodes = stationList.Where(p => p.DistrictCode == o.Code).Select(p => p.Code).ToArray();
+                                    IEnumerable<AirHourData> tempList = stationHourDataList.Where(p => stationCodes.Contains(p.Code));
+                                    if (tempList.Any())
+                                    {
+                                        AirHourAQIData data = new AirHourAQIData();
+                                        data.Code = o.Code;
+                                        data.Name = o.Name;
+                                        data.Time = time;
+                                        data.SO2 = DataHandle.Round(tempList.Average(p => p.SO2));
+                                        data.NO2 = DataHandle.Round(tempList.Average(p => p.NO2));
+                                        data.PM10 = DataHandle.Round(tempList.Average(p => p.PM10));
+                                        data.CO = DataHandle.Round(tempList.Average(p => p.CO), 3);
+                                        data.O3 = DataHandle.Round(tempList.Average(p => p.O3));
+                                        data.PM25 = DataHandle.Round(tempList.Average(p => p.PM25));
+                                        data.GetAQI();
+                                        list.Add(data);
+                                    }
+                                });
+                                DataTable dt = list.GetDataTable<AirHourAQIData>(tableName, "Effect", "Measure");
+                                SqlHelper.Insert(dt);
+                                MissingData.Delete(tableName, tableName, time);
+                            }
+                            catch (Exception e)
+                            {
+                                LogHelper.Logger.Error(string.Format("Insert {0} failed.", tableName), e);
+                                MissingData.InsertOrUpate(tableName, tableName, time, e.Message);
+                            }
+                        }
+                        else
+                        {
+                            MissingData.InsertOrUpate(tableName, tableName, time);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        LogHelper.Logger.Error(string.Format("Get {0} failed.", tableName), e);
+                        MissingData.InsertOrUpate(tableName, tableName, time, e.Message);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Logger.Error("SyncNationalCityHourAQIPublishRankData failed.", e);
+            }
+        }
+
         public static void SyncDistrictDayAQIPublishData(DateTime time)
         {
             string tableName = ConfigHelper.DistrictDayAQIPublishHistoryData;
@@ -587,6 +654,7 @@ namespace Xin.AQS
                     case "DistrictDayAQIPublishHistoryData": SyncDistrictDayAQIPublishData(o.Time); break;
                     case "DistrictDayAQIPublishRankData": SyncDistrictDayAQIPublishRankData(o.Time); break;
                     case "DistrictDayAQCIPublishRankData": SyncDistrictDayAQCIPublishRankData(o.Time); break;
+                    case "DistrictHourAQIPublishData": SyncDistrictHourAQIPublishData(o.Time); break;
                     default: break;
                 }
             });
