@@ -400,8 +400,7 @@ namespace Xin.AQS
                 {
                     try
                     {
-                        DateTime timePoint = time.AddHours(1);
-                        List<AQIDataPublishLive> stationDataList = DataQuery.GetHistory<AQIDataPublishLive>(ConfigHelper.AQIDataPublishHistory, timePoint, timePoint);
+                        List<AQIDataPublishLive> stationDataList = DataQuery.GetHistory<AQIDataPublishLive>(ConfigHelper.AQIDataPublishHistory, time, time);
                         if (stationDataList.Any())
                         {
                             try
