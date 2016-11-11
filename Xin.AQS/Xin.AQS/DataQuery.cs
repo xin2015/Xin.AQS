@@ -158,7 +158,7 @@ namespace Xin.AQS
             List<AirHourAQIData> list;
             try
             {
-                string cmdText = string.Format("select * from {0} where Code = @Code, Time >= @BeginTime and Time <= @EndTime", ConfigHelper.DistrictHourAQIPublishData);
+                string cmdText = string.Format("select * from {0} where Code = @Code and Time >= @BeginTime and Time <= @EndTime", ConfigHelper.DistrictHourAQIPublishData);
                 SqlParameter[] parameters = new SqlParameter[]{
                     new SqlParameter("@Code",districtCode),
                     new SqlParameter("@BeginTime",beginTime),
@@ -179,7 +179,7 @@ namespace Xin.AQS
             List<AirDayAQIData> list;
             try
             {
-                string cmdText = string.Format("select * from {0} where Code = @Code, Time >= @BeginTime and Time <= @EndTime", ConfigHelper.DistrictDayAQIPublishHistoryData);
+                string cmdText = string.Format("select * from {0} where Code = @Code and Time >= @BeginTime and Time <= @EndTime", ConfigHelper.DistrictDayAQIPublishHistoryData);
                 SqlParameter[] parameters = new SqlParameter[]{
                     new SqlParameter("@Code",districtCode),
                     new SqlParameter("@BeginTime",beginTime),
