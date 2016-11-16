@@ -46,7 +46,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Xin.Basic">
-      <HintPath>..\..\..\..\Module\4\Xin.Basic.dll</HintPath>
+      <HintPath>..\..\..\..\Modules\4.5\Xin.Basic.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
